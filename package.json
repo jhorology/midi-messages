@@ -22,12 +22,12 @@
     "url": "https://github.com/lachenmayer/midi-messages"
   },
   "devDependencies": {
-    "@types/node": "^10.12.9",
-    "@types/tape": "^4.2.32",
-    "tape": "^4.9.1",
-    "typescript": "^3.1.6"
+    "@types/node": "^11.11.4",
+    "@types/tape": "^4.2.33",
+    "tape": "^4.10.1",
+    "typescript": "^3.3.4000"
   },
   "dependencies": {
-    "readable-stream": "^3.0.6"
+    "readable-stream": "^3.2.0"
   }
 }

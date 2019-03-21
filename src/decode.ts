@@ -6,7 +6,8 @@ import {
   eox,
   isChannelVoiceMessage,
   isDataByte,
-  isSystemMessage,
+  isSystemCommonMessage,
+  isSystemRealTimeMessage,
   msbLsbToU14,
   parseBool,
   systemMessageTypes,
@@ -25,7 +26,9 @@ export function decode(
     if (isChannelVoiceMessage(statusByte)) {
       runningStatus = statusByte
       readChannelVoiceMessage(statusByte)
-    } else if (isSystemMessage(statusByte)) {
+    } else if (isSystemRealTimeMessage(statusByte)) {
+      readSystemMessage(statusByte)
+    } else if (isSystemCommonMessage(statusByte)) {
       runningStatus = null
       readSystemMessage(statusByte)
     }
@@ -125,7 +128,13 @@ export function decode(
     const type = systemMessageTypes[statusByte] as MIDISystemMessage['type']
     switch (type) {
       case 'SysEx': {
-        const deviceId = readU7()
+        let deviceId:any = readU7()
+        // 3 byets ID ?
+        if (deviceId == 0) {
+          deviceId = [deviceId]
+          deviceId.push(readU7())
+          deviceId.push(readU7())
+        }
         const data = readSysExData()
         onmessage({ type, deviceId, data })
         break

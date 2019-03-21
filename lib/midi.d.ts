@@ -56,6 +56,8 @@ export declare function u14ToMsbLsb(n: U14): {
 export declare function isDataByte(byte: any): boolean;
 export declare function isChannelVoiceMessage(byte: any): boolean;
 export declare function isSystemMessage(byte: any): boolean;
+export declare function isSystemCommonMessage(byte: any): boolean;
+export declare function isSystemRealTimeMessage(byte: any): boolean;
 export declare function parseBool(byte: number): boolean;
 export declare function msbLsbToU14(msb: number, lsb: number): U14;
 export declare function assertU7(byte: any): void;

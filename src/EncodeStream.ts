@@ -1,5 +1,9 @@
 import { Transform, TransformCallback } from 'readable-stream'
 import { encode } from './encode'
+import {
+  isSystemMessage,
+  isSystemCommonMessage,
+} from './midi'
 
 type Options = {
   useRunningStatus: boolean
@@ -22,13 +26,18 @@ export class EncodeStream extends Transform {
     const encoded = []
     try {
       for (const [status, ...data] of encode(message)) {
-        if (this.options.useRunningStatus) {
+        // RealTime Category messages (ie, Status of 0xF8 to 0xFF) do not effect running status in any way.
+        // System Common Category messages (ie, Status of 0xF0 to 0xF7) cancel any running status.
+        if (!isSystemMessage(status) && this.options.useRunningStatus) {
           if (status != this._runningStatus) {
             encoded.push(status)
             this._runningStatus = status
           }
         } else {
           encoded.push(status)
+          if (isSystemCommonMessage(status)) {
+            this._runningStatus = null
+          }
         }
         encoded.push(...data)
       }

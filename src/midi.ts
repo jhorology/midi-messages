@@ -119,6 +119,14 @@ export function isSystemMessage(byte: any): boolean {
   return byte >= 0xf0 && byte <= 0xff
 }
 
+export function isSystemCommonMessage(byte: any): boolean {
+  return byte >= 0xf0 && byte <= 0xf7
+}
+
+export function isSystemRealTimeMessage(byte: any): boolean {
+  return byte >= 0xf7 && byte <= 0xff
+}
+
 export function parseBool(byte: number): boolean {
   assertU7(byte)
   return byte >= 64
