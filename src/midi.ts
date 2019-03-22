@@ -124,7 +124,7 @@ export function isSystemCommonMessage(byte: any): boolean {
 }
 
 export function isSystemRealTimeMessage(byte: any): boolean {
-  return byte >= 0xf7 && byte <= 0xff
+  return byte >= 0xf8 && byte <= 0xff
 }
 
 export function parseBool(byte: number): boolean {
